@@ -9,7 +9,8 @@ It's very simple, just specify two things:
 Then, at each host, a confirmation is requested before the upload.
 At the end of each upload, there's a MD5 checksum control.
 
-The original script from Kirk Byers is here: https://pynet.twb-tech.com/blog/automation/netmiko-scp.html
+The original script from Kirk Byers is available here: https://pynet.twb-tech.com/blog/automation/netmiko-scp.html
+
 
 Jerome Tissieres
 https://aboutnetworks.net
