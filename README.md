@@ -13,7 +13,7 @@ The original script from Kirk Byers is available here: https://pynet.twb-tech.co
 
 ## usage
 
-Edit and the file `nxos-scp-upload.txt` with you requirements and then:
+Edit the file `requirements.txt` with you requirements and then:
 
 ```
 pip install -r requirements.txt
