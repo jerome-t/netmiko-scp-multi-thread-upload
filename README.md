@@ -1,4 +1,4 @@
-# nxos-scp-upload
+# NX-OS SCP Bulk Upload
 
 Here is a very simple Python script to upload and verify files to Cisco NX-OS hosts with Netmiko.
 
