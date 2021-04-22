@@ -1,0 +1,7 @@
+switch1.example.com
+switch2.example.com
+switch3.example.com
+switch4.example.com
+switch5.example.com
+switch6.example.com
+switch7.example.com
