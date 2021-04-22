@@ -72,9 +72,13 @@ Example where the file does not exists on the first host, but exists on the seco
 
 ### DevNet Sandbox
 
+--- To be completed ---
+
 A great way to make your repo easy for others to use is to provide a link to a [DevNet Sandbox](https://developer.cisco.com/site/sandbox/) that provides a network or other resources required to use this code. In addition to identifying an appropriate sandbox, be sure to provide instructions and any configuration necessary to run your code with the sandbox.
 
 ## How to test the software
+
+--- To be completed ---
 
 Provide details on steps to test, versions of components/dependencies against which code was tested, date the code was last tested, etc. 
 If the repo includes automated tests, detail how to run those tests.
@@ -83,21 +87,12 @@ If the repo is instrumented with a continuous testing framework, that is even be
 
 ## Known issues
 
-Document any significant shortcomings with the code. If using [GitHub Issues](https://help.github.com/en/articles/about-issues) to track issues, make that known and provide any templates or conventions to be followed when opening a new issue. 
+The MD5 check part need to be completed, it's not working yet.
 
-## Getting help
 
-Instruct users how to get help with this code; this might include links to an issues list, wiki, mailing list, etc.
+## Getting help and Getting involved
 
-**Example**
-
-If you have questions, concerns, bug reports, etc., please create an issue against this repository.
-
-## Getting involved
-
-This section should detail why people should get involved and describe key areas you are currently focusing on; e.g., trying to get feedback on features, fixing certain bugs, building important pieces, etc. Include information on how to setup a development environment if different from general installation instructions.
-
-General instructions on _how_ to contribute should be stated with a link to [CONTRIBUTING](./CONTRIBUTING.md) file.
+Please contact me on [Twitter](https://twitter.com/JeromeTissieres) or open an Issue/P.R.
 
 ## Author(s)
 
