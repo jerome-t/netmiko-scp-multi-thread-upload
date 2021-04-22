@@ -10,25 +10,65 @@ Describe the problem this code addresses, how your code solves the problem, chal
 
 ## Installation
 
-Requirements:
-	All you need is Python and pip. 
+Requirements: All you need is Python and pip. Then with pip we will install Netmiko and dependencies.
 
 Installation:
+
 	$ git clone https://github.com/jerome-t/nxos-scp-upload.git
 	$ sudo pip install -r requirements.txt
 
 ## Configuration
 
-Add the list of your NX-OS hosts into hosts.txt
+Update the file hosts.txt with the list of your NX-OS hosts, one host per line.
 
 Example:
+
 	host01.example.com
 	host02.example.com
 
 ## Usage
 
-Show users how to use the code. Be specific.
-Use appropriate formatting when showing code snippets or command line output.
+Add the file name as an argument to the script. 
+Then, the script will check if the file exists, read the list of hosts and ask you for your NX-OS credentials in order to upload the file.
+It will ask you for a confirmation before starting the upload.
+To save time and bandwidth, if the file already exists it will be not overwritten.
+
+usage: nxos-scp-upload.py filename
+
+positional arguments:
+  filename        The file to upload
+
+Example where the file does not exists on the first host, but exists on the second:
+
+	$ ./nxos-scp-upload.py testfile.txt 
+	================================================================================
+	Please, confirm the upload of: testfile.txt on:
+	n9300-testA.example.com
+	n9300-testB.example.com
+	Proceed? [n]|y: y
+	--------------------------------------------------------------------------------
+	Please insert your NX-OS username: admin
+	And your password
+	Password: 
+	--------------------------------------------------------------------------------
+	Upload on: n9300-testA.example.com
+	--------------------------------------------------------------------------------
+	Results for: n9300-testA.example.com
+	File exists already:  False
+	File transferred:  True
+	MD5 verified : True
+	================================================================================
+	Upload on: n9300-testB.example.com
+	--------------------------------------------------------------------------------
+	Results for: n9300-testB.example.com
+	File exists already:  True
+	File transferred:  False
+	MD5 verified : True
+	================================================================================
+	List completed, goodbye.
+	================================================================================
+
+	
 
 ### DevNet Sandbox
 
