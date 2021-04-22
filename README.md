@@ -1,16 +1,16 @@
 # NX-OS-SCP-Bulk-Transfer
 
-A Simple Python script to upload and verify (checksum) files to Cisco NX-OS devices, with the support of Netmiko
+A Simple Python script to upload and verify (checksum) files to multiple Cisco NX-OS devices, with the support of Netmiko.
 
-![add-image-here]()
  
 ## Use Case Description
 
-Describe the problem this code addresses, how your code solves the problem, challenges you had to overcome as part of the solution, and optional ideas you have in mind that could further extend your solution.
+If you have a large number of NX-OS devices and need to upload a file, for example a new version of NX-OS, to all these devices without the help of an external tool like Cisco DCNM or similar, it can be very time-consuming. This script takes care of everything.
 
 ## Installation
 
-Requirements: All you need is Python and pip. Then with pip we will install Netmiko and dependencies.
+Requirements: All you need is Python and pip. 
+Then, with pip we will install Netmiko and dependencies.
 
 Installation:
 
