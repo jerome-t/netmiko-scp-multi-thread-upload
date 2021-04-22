@@ -14,13 +14,16 @@ Requirements:
 	All you need is Python and pip. 
 
 Installation:
-
 	$ git clone https://github.com/jerome-t/nxos-scp-upload.git
 	$ sudo pip install -r requirements.txt
 
 ## Configuration
 
-If the code is configurable, describe it in detail, either here or in other documentation that you reference.
+Add the list of your NX-OS hosts into hosts.txt
+
+Example:
+	host01.example.com
+	host02.example.com
 
 ## Usage
 
