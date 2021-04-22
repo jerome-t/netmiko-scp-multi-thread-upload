@@ -1,10 +1,10 @@
 #!/usr/bin/python
-from netmiko import ConnectHandler, file_transfer
-from netmiko.ssh_exception import NetMikoAuthenticationException, NetMikoTimeoutException
-from paramiko.ssh_exception import AuthenticationException
 from getpass import getpass
 from argparse import ArgumentParser
 import os.path
+from netmiko import ConnectHandler, file_transfer
+from netmiko.ssh_exception import NetMikoAuthenticationException, NetMikoTimeoutException
+from paramiko.ssh_exception import AuthenticationException
 
 # --- Check file exists function
 def __is_valid_file(parser, arg):
@@ -53,7 +53,6 @@ with open("./hosts.txt", 'r') as FILE:
 # --- Ask confirmation
 print(80*"=")
 print('Please, confirm the upload of:',SOURCE_FILE+' on: ')
-print('note: if the file already exists, it will be overwritten.')
 print(*SW_LIST, sep ='\n')
 prompt = str("Proceed?")
 
