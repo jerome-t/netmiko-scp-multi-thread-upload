@@ -46,13 +46,14 @@ It will ask you for a confirmation before starting the upload.
 
 To save time and bandwidth, if the file already exists it will be not overwritten.
 
-**Usage: nxos-scp-upload.py filename**
+**Usage: scp-multi-upload.py filename**
 
 positional arguments:
   filename        The file to upload
 
 Example where the file does not exists on the first host, but exists on the second:
 
+	$ ./scp-multi-upload.py testfile.txt
 	================================================================================
 	Please, confirm the upload of testfile.txt on: 
 	c.example.com
