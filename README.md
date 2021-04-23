@@ -8,7 +8,9 @@ It checks if the file already exists on the remote devices and compares the chec
 
 If you have a large number of network devices and need to upload a big file, like a new OS or similar, to all these devices, it can be very time-consuming. This script takes care of everything.
 
-Supported devices are: Cisco IOS/IOS-XE/IOS-XR/NX-OS, Arista EOS, and Juniper JunOS.
+Supported devices are: Cisco IOS*/IOS-XE/IOS-XR/NX-OS, Arista EOS, and Juniper JunOS.
+
+Remark: on Cisco IOS, only ascii files are supported. Modern Cisco OS (XE, XR, NXOS) are not affected.
 
 
 ## Installation
@@ -25,15 +27,25 @@ Installation:
 
 Update the **hosts.csv** file with the list of your network hosts and vendor type.
 
-Vendor types are: cisco_ios, arista_eos, juniper_junos, cisco_nxos
+Vendor types are: cisco_ios (valid for IOS/IOS-XE/IOS-XR), cisco_nxos, arista_eos, juniper_junos
 
 Example of hosts.csv:
 
 	host01.example.com,cisco_ios
 	host02.example.com,cisco_nxos
+	host03.example.com,arista_eos
+	host04.example.com,juniper_junos
 
 
-The file system used for each OS type is the one defined by default in Netmiko. Please refer to the Netmiko documentation here: https://pynet.twb-tech.com/blog/automation/netmiko-scp.html
+The file system used for each device type is the one defined by default in Netmiko:
+
+	Cisco IOS/IOS-XE/IOS-XR        Auto detects the file-system
+	Cisco NX-OS                    bootflash:
+	Arista EOS                     /mnt/flash
+	Juniper Junos                  /var/tmp
+
+
+Please refer to the Netmiko documentation here for more information: https://pynet.twb-tech.com/blog/automation/netmiko-scp.html
 
 
 ## Usage
