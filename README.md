@@ -55,10 +55,10 @@ Example where the file does not exists on the first host, but exists on the seco
 
 	================================================================================
 	Please, confirm the upload of testfile.txt on: 
-	n9300-labc
-	n9300-labd
-	n9300-labe
-	n9300-labf
+	c.example.com
+	d.example.com
+	e.example.com
+	f.example.com
 	Proceed? [n]|y: y
 	--------------------------------------------------------------------------------
 	Please insert your username: admin
