@@ -2,12 +2,20 @@
 from getpass import getpass
 from argparse import ArgumentParser
 import os.path
+from time import time
+from concurrent.futures import ProcessPoolExecutor, wait
 from netmiko import ConnectHandler, file_transfer
 from netmiko.ssh_exception import NetMikoAuthenticationException, NetMikoTimeoutException
 from paramiko.ssh_exception import AuthenticationException
 
+# --- Define the variables
+SW_LIST = []
+MAX_THREADS = 4
+future_list = []
+
+
 # --- Check file exists function
-def __is_valid_file(parser, arg):
+def is_valid_file(parser, arg):
     if not os.path.exists(arg):
         parser.error("The file %s does not exist!" % arg)
     else:
@@ -37,16 +45,42 @@ def confirm(prompt=None, resp=False):
             return False
 
 
+# --- Upload Netmiko function
+def upload_nemiko(net_device):
+    print("Upload on:", HOST)
+        # Create the Netmiko SSH connection
+    try:
+        ssh_conn = ConnectHandler(**net_device)
+        transfer_dict = {}
+        transfer_dict = file_transfer(ssh_conn,
+                            source_file=SOURCE_FILE,
+                            dest_file=SOURCE_FILE,
+                            file_system='bootflash:',
+                            direction='put',
+                            overwrite_file=True)
+        print('Results for:', HOST)
+        print('File exists already: ',transfer_dict['file_exists'])
+        print('File transferred: ',transfer_dict['file_transferred'])
+        print('MD5 verified :',transfer_dict['file_verified'])
+        print(80*"=")
+    except NetMikoTimeoutException:
+        print('Skipped: SSH Timed out')
+        print(80*"=")
+        #continue
+    except (AuthenticationException, NetMikoAuthenticationException):
+        print('Skipped: Authentication failed')
+        print(80*"=")
+        #continue
+
 # --- Init argparse
 parser = ArgumentParser()
-parser.add_argument("filename", help="The file to upload", metavar='FILE', type=lambda x: __is_valid_file(parser, x))
+parser.add_argument("filename", help="The file to upload", metavar='FILE', type=lambda x: is_valid_file(parser, x))
 args = parser.parse_args()
 
 # --- Define the OS file to upload
 SOURCE_FILE = (args.filename)
 
 # --- Define the switch list
-SW_LIST = []
 with open("./hosts.txt", 'r') as FILE:
     SW_LIST = [line.rstrip() for line in FILE]
 
@@ -64,7 +98,13 @@ if confirm(prompt=prompt, resp=False) == True:
     PASSWORD = getpass()
     print(80*"-")
 
-    # --- SCP itself
+    # --- Get the time for timing
+    start_time = time()
+
+    # --- Set the number of threads
+    pool = ProcessPoolExecutor(MAX_THREADS)
+
+    # --- SCP itself, in multi-threads
     for HOST in SW_LIST:
         net_device = {
         'device_type': 'cisco_nxos',
@@ -72,33 +112,13 @@ if confirm(prompt=prompt, resp=False) == True:
         'username': USERNAME,
         'password': PASSWORD,
         }
-        print("Upload on:", HOST)
-        # Create the Netmiko SSH connection
-        try:
-            ssh_conn = ConnectHandler(**net_device)
-            transfer_dict = {}
-            transfer_dict = file_transfer(ssh_conn,
-                                source_file=SOURCE_FILE,
-                                dest_file=SOURCE_FILE,
-                                file_system='bootflash:',
-                                direction='put',
-                                overwrite_file=True)
-            print(80*"-")
-            print('Results for:', HOST)
-            print('File exists already: ',transfer_dict['file_exists'])
-            print('File transferred: ',transfer_dict['file_transferred'])
-            print('MD5 verified :',transfer_dict['file_verified'])
-            print(80*"=")
-        except NetMikoTimeoutException:
-            print('Skipped: SSH Timed out')
-            print(80*"=")
-            continue
-        except (AuthenticationException, NetMikoAuthenticationException):
-            print('Skipped: Authentication failed')
-            print(80*"=")
-            continue
+        future = pool.submit(upload_nemiko, net_device)
+        future_list.append(future)
+
+    wait(future_list)
+
     # --- All done confirmation
-    print("List completed, goodbye.")
+    print("Uploads completed in {} seconds.".format(time() - start_time))
     print(80*"=")
 else:
     print("Operation aborted, goodbye.")
