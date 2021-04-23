@@ -42,33 +42,43 @@ Example where the file does not exists on the first host, but exists on the seco
 
 	$ ./nxos-scp-upload.py testfile.txt 
 	================================================================================
-	Please, confirm the upload of: testfile.txt on:
-	n9300-testA.example.com
-	n9300-testB.example.com
+	Please, confirm the upload of: testfile.txt on: 
+	n9300-labc.example.com
+	n9300-labd.example.ch
+	n9300-labe.example.ch
+	n9300-labf.example.ch
 	Proceed? [n]|y: y
 	--------------------------------------------------------------------------------
 	Please insert your NX-OS username: admin
 	And your password
 	Password: 
 	--------------------------------------------------------------------------------
-	Upload on: n9300-testA.example.com
-	--------------------------------------------------------------------------------
-	Results for: n9300-testA.example.com
-	File exists already:  False
+	Upload on: n9300-labc.example.ch
+	Upload on: n9300-labd.example.ch
+	Upload on: n9300-labe.example.ch
+	Upload on: n9300-labf.example.ch
+	Results for: n9300-labf.example.ch
+	File exists already:  True
 	File transferred:  True
 	MD5 verified : True
 	================================================================================
-	Upload on: n9300-testB.example.com
-	--------------------------------------------------------------------------------
-	Results for: n9300-testB.example.com
+	Results for: n9300-labd.example.ch
 	File exists already:  True
-	File transferred:  False
+	File transferred:  True
 	MD5 verified : True
 	================================================================================
-	List completed, goodbye.
+	Results for: n9300-labe.example.ch
+	File exists already:  True
+	File transferred:  True
+	MD5 verified : True
 	================================================================================
-
-	
+	Results for: n9300-labc.example.ch
+	File exists already:  True
+	File transferred:  True
+	MD5 verified : True
+	================================================================================
+	Uploads completed in 3.500903606414795 seconds.
+	================================================================================
 
 
 ## DevNet Sandbox
