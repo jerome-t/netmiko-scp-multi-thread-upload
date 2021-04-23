@@ -1,11 +1,18 @@
 # NX-OS-SCP-Bulk-Transfer
 
-A Simple Python script to upload and verify (checksum) files to multiple Cisco NX-OS devices in parallel, with the support of Netmiko.
+A Simple Python script to upload and verify (checksum) files to multiple network devices in parallel, supported by Netmiko
 
  
 ## Use Case Description
 
 If you have a large number of NX-OS devices and need to upload a file, for example a new version of NX-OS, to all these devices without the help of an external tool like Cisco DCNM or similar, it can be very time-consuming. This script takes care of everything.
+
+This script uses the strength and functionality of Netmiko to copy, in parallel, a single file to multiple network devices.
+
+Supported devices are:
+
+	Cisco Cisco IOS/IOS-XE/IOS-XR/NX-OS, Arista EOS, Juniper JunOS
+
 
 ## Installation
 
@@ -19,12 +26,21 @@ Installation:
 
 ## Configuration
 
-Update the file hosts.txt with the list of your NX-OS hosts, one host per line.
+Update the file hosts.csv with the list of your network hosts, one host per line, including the vendor type..
+
+Vendor types are:
+
+	cisco_ios
+	arista_eos
+	juniper_junos
+	cisco_nxos
 
 Example:
 
-	host01.example.com
-	host02.example.com
+	host01.example.com,cisco_ios
+	host02.example.com,cisco_nxos
+
+The file system is the default defined into Netmiko. Please refer to the Netmiko documentation here[https://pynet.twb-tech.com/blog/automation/netmiko-scp.html]
 
 ## Usage
 

@@ -1,18 +1,17 @@
 #!/usr/bin/python
 from getpass import getpass
 from argparse import ArgumentParser
+import csv
 import os.path
+import sys
 from time import time
 from concurrent.futures import ProcessPoolExecutor, wait
 from netmiko import ConnectHandler, file_transfer
 from netmiko.ssh_exception import NetMikoAuthenticationException, NetMikoTimeoutException
 from paramiko.ssh_exception import AuthenticationException
 
-# --- Define the variables
-SW_LIST = []
+# --- Define the threads
 MAX_THREADS = 4
-future_list = []
-
 
 # --- Check file exists function
 def is_valid_file(parser, arg):
@@ -55,21 +54,21 @@ def upload_nemiko(net_device):
         transfer_dict = file_transfer(ssh_conn,
                             source_file=SOURCE_FILE,
                             dest_file=SOURCE_FILE,
-                            file_system='bootflash:',
-                            direction='put',
-                            overwrite_file=True)
-        print('Results for:', HOST)
+                            )
+        print(80*"=")
+        print('Results for', HOST+':')
         print('File exists already: ',transfer_dict['file_exists'])
         print('File transferred: ',transfer_dict['file_transferred'])
         print('MD5 verified :',transfer_dict['file_verified'])
-        print(80*"=")
     except NetMikoTimeoutException:
-        print('Skipped: SSH Timed out')
         print(80*"=")
+        print('Results for', HOST+':')
+        print('Skipped: SSH Timed out')
         #continue
     except (AuthenticationException, NetMikoAuthenticationException):
-        print('Skipped: Authentication failed')
         print(80*"=")
+        print('Results for', HOST+':')
+        print('Skipped: Authentication failed')
         #continue
 
 # --- Init argparse
@@ -80,20 +79,29 @@ args = parser.parse_args()
 # --- Define the OS file to upload
 SOURCE_FILE = (args.filename)
 
-# --- Define the switch list
-with open("./hosts.txt", 'r') as FILE:
-    SW_LIST = [line.rstrip() for line in FILE]
+# --- Check the hosts.csv file and get the list of hosts
+VENDORS_TYPES = ["cisco_ios", "arista_eos", "juniper_junos", "cisco_nxos"]
+VENDOR_TYPE = ''
+HOSTS_LIST = []
+
+with open("./hosts.csv", 'r') as csvfile:
+    csv_reader = csv.reader(csvfile, delimiter=',')
+    for row in csv_reader:
+        if VENDOR_TYPE in VENDORS_TYPES not in str(row[1]):
+            print('Invalid CSV, please check the vendor types. Must be: cisco_ios, arista_eos, juniper_junos or cisco_nxos')
+            sys.exit()
+        HOSTS_LIST.append(row[0])
 
 # --- Ask confirmation
 print(80*"=")
-print('Please, confirm the upload of:',SOURCE_FILE+' on: ')
-print(*SW_LIST, sep ='\n')
+print('Please, confirm the upload of',SOURCE_FILE+' on: ')
+print(*HOSTS_LIST, sep ='\n')
 prompt = str("Proceed?")
 
 if confirm(prompt=prompt, resp=False) == True:
     # --- Get credentials
     print(80*"-")
-    USERNAME = input('Please insert your NX-OS username: ')
+    USERNAME = input('Please insert your username: ')
     print("And your password")
     PASSWORD = getpass()
     print(80*"-")
@@ -105,19 +113,26 @@ if confirm(prompt=prompt, resp=False) == True:
     pool = ProcessPoolExecutor(MAX_THREADS)
 
     # --- SCP itself, in multi-threads
-    for HOST in SW_LIST:
-        net_device = {
-        'device_type': 'cisco_nxos',
-        'host': HOST,
-        'username': USERNAME,
-        'password': PASSWORD,
-        }
-        future = pool.submit(upload_nemiko, net_device)
-        future_list.append(future)
+    SW_LIST = []
+    FUTURE_LIST = []
+    with open("./hosts.csv", 'r') as csvfile:
+        SW_LIST = csv.reader(csvfile, delimiter=',')
+        for CSV_ROW in SW_LIST:
+            HOST = CSV_ROW[0]
+            DEVICE_TYPE = CSV_ROW[1]
+            net_device = {
+            'device_type': DEVICE_TYPE,
+            'host': HOST,
+            'username': USERNAME,
+            'password': PASSWORD,
+            }
+            FUTURE = pool.submit(upload_nemiko, net_device)
+            FUTURE_LIST.append(FUTURE)
 
-    wait(future_list)
+        wait(FUTURE_LIST)
 
     # --- All done confirmation
+    print(80*"=")
     print("Uploads completed in {} seconds.".format(time() - start_time))
     print(80*"=")
 else:
