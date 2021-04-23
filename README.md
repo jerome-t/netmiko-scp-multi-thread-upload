@@ -1,6 +1,6 @@
 # NX-OS-SCP-Bulk-Transfer
 
-A Simple Python script to upload and verify (checksum) files to multiple Cisco NX-OS devices, with the support of Netmiko.
+A Simple Python script to upload and verify (checksum) files to multiple Cisco NX-OS devices in parallel, with the support of Netmiko.
 
  
 ## Use Case Description
@@ -90,7 +90,8 @@ If the repo is instrumented with a continuous testing framework, that is even be
 
 The MD5 check part need to be completed, it's not working yet.
 
-Uploading files in parallel still needs to be added.
+This script uses multi-threads and may be improved by using multi-processing. 
+The defined threads are 4 for now, I have to test what is the optimal number of threads depending on the devices, computer, network bandwidth and latency, etc.
 
 
 ## Getting help and Getting involved
