@@ -1,12 +1,12 @@
 # netmiko-scp-multi-thread-upload
 
-This script leverages Netmiko's features to securely copy (SCP) a single file to a remote network device. Netmiko also checks if the file exists already on the remote device and compares the checksums. If the files are identical, it does not upload it. 
-To this, I added parallelism: to make a parallel copy to several destinations. And also to have the hosts and OS defined in a CSV file to avoid having to edit the Python script itself. I also added the local file imput and check. 
+This script leverages Netmiko's features to securely copy (SCP) a single file to a remote network device. It also checks if the file exists already on the remote device and compares the checksums: if the files are identical, it does not upload it.
+To this, I added parallelism: to make copies in parallel towards several remote devices. And also to have the remote hosts and OS defined in a CSV file, to avoid having to edit the Python script itself. I also added a check if the file to copy is present locally.
 
 
 ## Use Case Description
 
-If you have a large number of network devices and need to upload a big file, like a new OS or similar, to all these devices, it can be very time-consuming. This script takes care of everything.
+If you have a large number of network devices to which you need to send a file, such as a new operating system or similar, doing it manually can be very time consuming. This script takes care of everything and does the upload in parallel to save time.
 
 Supported devices are: Cisco IOS*/IOS-XE/IOS-XR/NX-OS, Arista EOS, and Juniper JunOS.
 
