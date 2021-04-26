@@ -120,7 +120,7 @@ For the credentials, please check the [Cisco DevNet Sandbox](https://developer.c
 
 ## Known issues
 
-The 'file exists already' value is always True, even if it does not exists in reality. The upload is done anyway, this is only an output error, but the script is working at 100%
+The 'file exists already' return value is always True, even if the file does not exists on the remote device. The upload is done anyway, this is only an output error, but the script is working at 100%
 
 This script uses multi-threads, it may be improved by using multi-processing.
 The defined threads are 4 for now, I have to test what is the optimal number of threads depending on the devices, computer, network bandwidth and latency, etc.
