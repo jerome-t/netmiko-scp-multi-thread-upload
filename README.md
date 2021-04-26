@@ -108,20 +108,15 @@ Example where the file does not exists on the first host, but exists on the seco
 
 
 
-## DevNet Sandbox
+## How to test the software & DevNet Sandbox
 
---- To be completed ---
+You can test to transfer a file to a [DevNet Sandbox](https://developer.cisco.com/site/sandbox/) 
 
-A great way to make your repo easy for others to use is to provide a link to a [DevNet Sandbox](https://developer.cisco.com/site/sandbox/) that provides a network or other resources required to use this code. In addition to identifying an appropriate sandbox, be sure to provide instructions and any configuration necessary to run your code with the sandbox.
+As example, you can change the file **hosts.csv** like this to test with the CRS1000v (IOX-XE) always on sandbox:
+	
+	sandbox-iosxe-latest-1.cisco.com,cisco_ios
 
-
-## How to test the software
-
---- To be completed ---
-
-Provide details on steps to test, versions of components/dependencies against which code was tested, date the code was last tested, etc. 
-If the repo includes automated tests, detail how to run those tests.
-If the repo is instrumented with a continuous testing framework, that is even better.
+For the credentials, please check the [Cisco DevNet Sandbox](https://developer.cisco.com/site/sandbox/) and search for Always On Sandbox 
 
 
 ## Known issues
