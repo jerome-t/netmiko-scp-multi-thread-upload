@@ -111,12 +111,11 @@ Example where the file does not exists on the first host, but exists on the seco
 ## How to test the software & DevNet Sandbox
 
 You can test to transfer a file to a [DevNet Sandbox](https://developer.cisco.com/site/sandbox/) 
-
-As example, you can change the file **hosts.csv** like this to test with the CRS1000v (IOX-XE) always on sandbox:
+For example, you can change the file **hosts.csv** like below, to test with the CRS1000v (IOX-XE) always on sandbox:
 	
 	sandbox-iosxe-latest-1.cisco.com,cisco_ios
 
-For the credentials, please check the [Cisco DevNet Sandbox](https://developer.cisco.com/site/sandbox/) and search for Always On Sandbox 
+For the credentials, please check the [Cisco DevNet Sandbox](https://developer.cisco.com/site/sandbox/) and search for Always On Sandbox in the Sandbox catalog. 
 
 
 ## Known issues
