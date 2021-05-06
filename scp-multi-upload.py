@@ -11,7 +11,7 @@ from netmiko.ssh_exception import NetMikoAuthenticationException, NetMikoTimeout
 from paramiko.ssh_exception import AuthenticationException
 
 # --- Define the threads
-MAX_THREADS = 4
+MAX_THREADS = 8
 
 # --- Check file exists function
 def is_valid_file(parser, arg):
