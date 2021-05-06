@@ -1,3 +1,5 @@
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/jerome-t/netmiko-scp-multi-thread-upload)
+
 # netmiko-scp-multi-thread-upload
 
 This script leverages Netmiko's features to securely copy (SCP) a single file to a remote network device. It also checks if the file exists already on the remote device and compares the checksums: if the files are identical, it does not upload it.
