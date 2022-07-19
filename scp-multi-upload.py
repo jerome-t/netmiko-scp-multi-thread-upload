@@ -6,9 +6,7 @@ import os.path
 import sys
 from time import time
 from concurrent.futures import ProcessPoolExecutor, wait
-from netmiko import ConnectHandler, file_transfer
-from netmiko.ssh_exception import NetMikoAuthenticationException, NetMikoTimeoutException
-from paramiko.ssh_exception import AuthenticationException
+from netmiko import ConnLogOnly, file_transfer
 
 # --- Define the threads
 MAX_THREADS = 8
@@ -47,9 +45,15 @@ def confirm(prompt=None, resp=False):
 # --- Upload Netmiko function
 def upload_nemiko(net_device):
     print("Upload on:", HOST)
-        # Create the Netmiko SSH connection
-    try:
-        ssh_conn = ConnectHandler(**net_device)
+
+    # Create the Netmiko SSH connection
+    ssh_conn = ConnLogOnly(**net_device)
+
+    # Test access, skip if failed
+    if ssh_conn is None:
+        print(HOST+ ": Logging in failed... skipping")
+        print(40*"-")
+    else:
         transfer_dict = {}
         transfer_dict = file_transfer(ssh_conn,
                             source_file=SOURCE_FILE,
@@ -60,16 +64,6 @@ def upload_nemiko(net_device):
         print('File exists already: ',transfer_dict['file_exists'])
         print('File transferred: ',transfer_dict['file_transferred'])
         print('MD5 verified :',transfer_dict['file_verified'])
-    except NetMikoTimeoutException:
-        print(80*"=")
-        print('Results for', HOST+':')
-        print('Skipped: SSH Timed out')
-        #continue
-    except (AuthenticationException, NetMikoAuthenticationException):
-        print(80*"=")
-        print('Results for', HOST+':')
-        print('Skipped: Authentication failed')
-        #continue
 
 # --- Init argparse
 parser = ArgumentParser()
